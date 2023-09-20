@@ -160,15 +160,15 @@ public class InterVideojuego extends javax.swing.JInternalFrame {
         plataforma = jComboBox_plataforma.getSelectedItem().toString().trim();
         
         //Validacion de campos
-        if(txt_nombre.getText().equals("")||txt_cantidad.getText().equals("")
-                ||txt_precio.getText().equals("")){
+        if(txt_nombre.getText().isEmpty()||txt_cantidad.getText().isEmpty()
+                ||txt_precio.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
             txt_nombre.setBackground(Color.red);
             txt_cantidad.setBackground(Color.red);
             txt_precio.setBackground(Color.red);
         }else{
             //consulta para verificar redundancia de informacion
-            if(!controlVideojuego.verificacionExiste(txt_nombre.getText().trim())){
+            if(!controlVideojuego.verificacionExiste(txt_nombre.getText().trim(), txt_descripcion.getText().trim())){
                 if(iva.equalsIgnoreCase("Seleccione IVA:")){
                     JOptionPane.showMessageDialog(null, "Seleccione IVA.");
                 }else if(categoria.equalsIgnoreCase("Seleccione Categoria:")){

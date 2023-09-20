@@ -124,6 +124,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jMenuItem4_gestionar_videojuegos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/gestionar juegos.png"))); // NOI18N
         jMenuItem4_gestionar_videojuegos.setText("Gestionar Videojuego");
         jMenuItem4_gestionar_videojuegos.setPreferredSize(new java.awt.Dimension(300, 40));
+        jMenuItem4_gestionar_videojuegos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4_gestionar_videojuegosActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4_gestionar_videojuegos);
 
         jMenuItem5_actualizar_stock.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -342,6 +347,12 @@ public class FrmMenu extends javax.swing.JFrame {
         jDesktopPane_menu.add(interVideojuego);
         interVideojuego.setVisible(true);
     }//GEN-LAST:event_jMenuItem3_nuevo_videojuegoActionPerformed
+
+    private void jMenuItem4_gestionar_videojuegosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4_gestionar_videojuegosActionPerformed
+        InterGestionarVideojuego gestionarVideojuego = new InterGestionarVideojuego();
+        jDesktopPane_menu.add(gestionarVideojuego);
+        gestionarVideojuego.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4_gestionar_videojuegosActionPerformed
 
     /**
      * @param args the command line arguments
