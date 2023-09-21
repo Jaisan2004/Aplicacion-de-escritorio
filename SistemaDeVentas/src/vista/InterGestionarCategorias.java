@@ -31,7 +31,7 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
     
     public InterGestionarCategorias() {
         initComponents();
-        this.setSize(new Dimension(700, 400));
+        this.setSize(new Dimension(750, 425));
         this.setTitle("Gestionar Categoria");
         
         this.CargarTablaCategoria();
@@ -48,6 +48,7 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jButton_refrescar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1_categorias = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -58,6 +59,9 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
         txt_estado = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txt_descripcion = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        txt_filtro = new javax.swing.JTextField();
+        jButton_buscar = new javax.swing.JButton();
         jLabel1_walpaper = new javax.swing.JLabel();
 
         setClosable(true);
@@ -72,6 +76,14 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton_refrescar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/actualizar Tabla.png"))); // NOI18N
+        jButton_refrescar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_refrescarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton_refrescar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, -1, -1));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -91,7 +103,7 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 7, 440, 240));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 460, 250));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 510, 250));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -120,7 +132,7 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
         });
         jPanel2.add(jButton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 36, -1, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, 130, 80));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 120, 130, 80));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -158,10 +170,25 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
         });
         jPanel3.add(txt_descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 160, 190, 150));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 220, 190, 150));
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel4.add(txt_filtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 510, -1));
+
+        jButton_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar (1).png"))); // NOI18N
+        jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_buscarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, -1, -1));
+
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 590, 50));
 
         jLabel1_walpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo3.jpg"))); // NOI18N
-        getContentPane().add(jLabel1_walpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 370));
+        getContentPane().add(jLabel1_walpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 390));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -202,6 +229,7 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
                     txt_descripcion.setText("");
                     txt_descripcion.setBackground(Color.white);
                     txt_estado.setText("");
+                    txt_filtro.setText("");
                     this.CargarTablaCategoria();
                 }else{
                     JOptionPane.showMessageDialog(null, "Error al actualizar Categoria");
@@ -220,10 +248,23 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_descripcionActionPerformed
 
+    private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
+        // TODO add your handling code here:
+        this.CargarTablaCategoria(txt_filtro.getText().trim());
+    }//GEN-LAST:event_jButton_buscarActionPerformed
+
+    private void jButton_refrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_refrescarActionPerformed
+        // TODO add your handling code here:
+        this.CargarTablaCategoria();
+        txt_filtro.setText("");
+    }//GEN-LAST:event_jButton_refrescarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_actualizar;
+    private javax.swing.JButton jButton_buscar;
     private javax.swing.JButton jButton_eliminar;
+    private javax.swing.JButton jButton_refrescar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel1_walpaper;
     private javax.swing.JLabel jLabel2;
@@ -231,10 +272,12 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     public static javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTable1_categorias;
     private javax.swing.JTextField txt_descripcion;
     private javax.swing.JTextField txt_estado;
+    private javax.swing.JTextField txt_filtro;
     // End of variables declaration//GEN-END:variables
 
     /*
@@ -244,6 +287,48 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
         Connection con = (Connection) Conexion.conectar();
         DefaultTableModel model = new DefaultTableModel();
         String sql="select idCategoria, descripcion, estado from "+TABLA;
+        Statement st;
+        
+        try {
+            st =(Statement) con.createStatement();
+            ResultSet rs= st.executeQuery(sql);
+            InterGestionarCategorias.jTable1_categorias = new JTable(model);
+            InterGestionarCategorias.jScrollPane1.setViewportView(InterGestionarCategorias.jTable1_categorias);
+            
+            model.addColumn("idCategoria");
+            model.addColumn("descripcion");
+            model.addColumn("estado");
+            
+            while(rs.next()){
+                Object fila[] = new Object[3];
+                
+                for(int i = 0; i<3; i++){
+                    fila[i] = rs.getObject(i+1);
+                }
+                model.addRow(fila);
+            }
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error al llamar la tabla categoria: "+e);
+        }
+        
+        jTable1_categorias.addMouseListener(new MouseAdapter(){
+           @Override
+           public void mouseClicked(MouseEvent e){
+               int fila_point =jTable1_categorias.rowAtPoint(e.getPoint());
+               int columna_point = 0;
+               if(fila_point > -1){
+                   idCategoria = (int) model.getValueAt(fila_point, columna_point);
+                   EnviarDatosCategoriaSeleccionada(idCategoria);
+               }
+           }  
+        });
+    }
+    
+    private void CargarTablaCategoria(String descripcion){
+        Connection con = (Connection) Conexion.conectar();
+        DefaultTableModel model = new DefaultTableModel();
+        String sql="select idCategoria, descripcion, estado from "+TABLA+" where descripcion LIKE'%"+descripcion+"%';";
         Statement st;
         
         try {

@@ -11,14 +11,20 @@ import java.sql.SQLException;
 import conexion.Conexion;
 import controlador.Ctrl_Categoria;
 import controlador.Ctrl_Videojuego;
+import excel.Format_Videojuego;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -66,9 +72,11 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jButton_eliminar = new javax.swing.JButton();
         jButton_Actualizar = new javax.swing.JButton();
+        jButton_cargaMasiva = new javax.swing.JButton();
+        jButton_formato = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         txt_filtro = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jButton_buscar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -143,7 +151,7 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
                 jButton_eliminarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 36, 110, -1));
+        jPanel2.add(jButton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 110, -1));
 
         jButton_Actualizar.setBackground(new java.awt.Color(26, 188, 156));
         jButton_Actualizar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -154,7 +162,31 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
                 jButton_ActualizarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 110, -1));
+        jPanel2.add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 110, -1));
+
+        jButton_cargaMasiva.setBackground(new java.awt.Color(41, 128, 185));
+        jButton_cargaMasiva.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton_cargaMasiva.setForeground(new java.awt.Color(0, 0, 0));
+        jButton_cargaMasiva.setText("<html>\n<center>Cargar <center> Videojuegos\n\n</html>");
+        jButton_cargaMasiva.setFocusPainted(false);
+        jButton_cargaMasiva.setFocusable(false);
+        jButton_cargaMasiva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_cargaMasivaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton_cargaMasiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 110, 40));
+
+        jButton_formato.setBackground(new java.awt.Color(39, 174, 96));
+        jButton_formato.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton_formato.setForeground(new java.awt.Color(0, 0, 0));
+        jButton_formato.setText("<html>\n<center>Descargar<center>\n<center> Formato Excel<center>\n</html>");
+        jButton_formato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_formatoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton_formato, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 110, 60));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 140, 130, 270));
 
@@ -166,13 +198,13 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
         txt_filtro.setForeground(new java.awt.Color(0, 0, 0));
         jPanel4.add(txt_filtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1030, 30));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar (1).png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar (1).png"))); // NOI18N
+        jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButton_buscarActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 10, -1, -1));
+        jPanel4.add(jButton_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 10, -1, -1));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 79, 1130, 50));
 
@@ -243,6 +275,7 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
         jPanel3.add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 170, -1));
 
         txt_cantidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_cantidad.setEnabled(false);
         jPanel3.add(txt_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 170, -1));
 
         txt_precio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -372,22 +405,39 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // refrescar
         this.CargarTablaVideojuego();
         txt_filtro.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
+        // filtrar
         this.CargarTablaVideojuego(txt_filtro.getText().trim());
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton_buscarActionPerformed
+
+    private void jButton_cargaMasivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_cargaMasivaActionPerformed
+        try {
+            // seleccionar archivo
+            this.cargaMasiva();
+        } catch (IOException ex) {
+            Logger.getLogger(InterGestionarVideojuego.class.getName()).log(Level.SEVERE, "Se quedo en el boton", ex);
+        }
+    }//GEN-LAST:event_jButton_cargaMasivaActionPerformed
+
+    private void jButton_formatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_formatoActionPerformed
+        // descargar formato de excel
+            Format_Videojuego.crearExcel();
+
+    }//GEN-LAST:event_jButton_formatoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton_Actualizar;
+    private javax.swing.JButton jButton_buscar;
+    private javax.swing.JButton jButton_cargaMasiva;
     private javax.swing.JButton jButton_eliminar;
+    private javax.swing.JButton jButton_formato;
     private javax.swing.JComboBox<String> jComboBox_categoria;
     private javax.swing.JComboBox<String> jComboBox_iva;
     private javax.swing.JComboBox<String> jComboBox_plataforma;
@@ -685,14 +735,14 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
         }
         return obtenerIdPlataforma;
     }
-    
+
     private void CargarTablaVideojuego(String nombre) {
         Connection con = (Connection) Conexion.conectar();
         DefaultTableModel model = new DefaultTableModel();
 
         String sql = "select v.idVideojuego, v.nombre, v.cantidad, v.precio, v.descripcion, v.porcentajeIva, c.descripcion, p.descripcion, v.estado "
                 + "from " + TABLA + " as v," + TABLACATE + " as c," + TABLAPLAT + " as p "
-                + "where v.idCategoria = c.idCategoria and v.idPlataforma = p.idPlataforma and nombre LIKE'"+nombre+"%' order by idVideojuego ASC;";
+                + "where v.idCategoria = c.idCategoria and v.idPlataforma = p.idPlataforma and nombre LIKE'" + nombre + "%' order by idVideojuego ASC;";
         Statement st;
 
         try {
@@ -749,6 +799,24 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
                 }
             }
         });
+    }
+    JFileChooser seleccionar = new JFileChooser();
+    File archivo;
+
+    //Carga masiva desde excel
+    private void cargaMasiva() throws IOException {
+        if (seleccionar.showDialog(null, "abrir") == JFileChooser.APPROVE_OPTION) {
+            archivo = seleccionar.getSelectedFile();
+            if (archivo.canRead()) {
+                if (archivo.getName().endsWith("xlsx")) {
+                    String path = archivo.getAbsolutePath();
+                    Ctrl_Videojuego videojuego = new Ctrl_Videojuego();
+
+                    videojuego.cargaMasiva(path);
+
+                }
+            }
+        }
     }
 
 }
