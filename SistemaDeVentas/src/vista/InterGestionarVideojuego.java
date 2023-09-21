@@ -196,6 +196,11 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
 
         txt_filtro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_filtro.setForeground(new java.awt.Color(0, 0, 0));
+        txt_filtro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_filtroActionPerformed(evt);
+            }
+        });
         jPanel4.add(txt_filtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1030, 30));
 
         jButton_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar (1).png"))); // NOI18N
@@ -407,6 +412,7 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // refrescar
         this.CargarTablaVideojuego();
+        this.Limpiar();
         txt_filtro.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -426,9 +432,14 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
 
     private void jButton_formatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_formatoActionPerformed
         // descargar formato de excel
-            Format_Videojuego.crearExcel();
+            Format_Videojuego format_Videojuego = new Format_Videojuego();
+            format_Videojuego.crearExcel();
 
     }//GEN-LAST:event_jButton_formatoActionPerformed
+
+    private void txt_filtroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_filtroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_filtroActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -818,5 +829,6 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
             }
         }
     }
+    
 
 }

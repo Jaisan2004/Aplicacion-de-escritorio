@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import modelo.Categoria;
 import modelo.Videojuego;
 import org.apache.poi.ss.usermodel.Row;
@@ -51,9 +52,10 @@ public class Ctrl_Videojuego {
         return respuesta;
     }
 
-    public boolean verificacionExiste(String videojuego, String descripcion) {
+    public boolean verificacionExiste(String videojuego, String descripcion, int idPlataforma) {
         boolean respuesta = false;
-        String sql = "select nombre, descripcion from " + TABLA + " where nombre = '" + videojuego + "' and descripcion = '" + descripcion + "';";
+        String sql = "select nombre, descripcion from " + TABLA + " where nombre = '" + videojuego + "' and descripcion = '" + descripcion + "'"
+                + "and idPlataforma= '"+idPlataforma+"';";
         Statement st;
 
         try {
@@ -119,7 +121,9 @@ public class Ctrl_Videojuego {
     }
 
     public void cargaMasiva(String archivo) throws IOException {
-
+        int estado= 1;
+        int id = 0;
+        PreparedStatement ps;
         try {
             Connection cn = (Connection) Conexion.conectar();
             FileInputStream file = new FileInputStream(new File(archivo));
@@ -132,17 +136,29 @@ public class Ctrl_Videojuego {
             for (int i = 1; i <= numFilas; i++) {
                 Row fila = sheet.getRow(i);
 
-                PreparedStatement ps = (PreparedStatement) cn.prepareStatement("inset into " + TABLA + " values (?,?,?,?,?,?,?,?,?);");
-
-                ps.setInt(1, 0);
-                ps.setString(2, fila.getCell(0).getStringCellValue());
-                ps.setInt(3, Integer.parseInt(fila.getCell(1).getStringCellValue()));
-                ps.setDouble(4, fila.getCell(2).getNumericCellValue());
-                ps.setString(5, fila.getCell(3).getStringCellValue());
-                ps.setInt(6, Integer.parseInt(fila.getCell(4).getStringCellValue()));
-                ps.setInt(7, Integer.parseInt(fila.getCell(5).getStringCellValue()));
-                ps.setInt(8, Integer.parseInt(fila.getCell(6).getStringCellValue()));
-                ps.setInt(9, 1);
+                ps = (PreparedStatement) cn.prepareStatement("insert into " + TABLA + " (nombre, cantidad, precio, descripcion, porcentajeIva, idCategoria, idPlataforma, estado) "
+                        + "values (?,?,?,?,?,?,?,?);");
+                if (!verificacionExiste(fila.getCell(0).getStringCellValue(), fila.getCell(3).getStringCellValue(), 
+                       (int) fila.getCell(6).getNumericCellValue() )) {
+                    
+                    
+                    ps.setString(1, fila.getCell(0).getStringCellValue());
+                    System.out.println(fila.getCell(0).getStringCellValue());
+                    ps.setInt(2, (int) (fila.getCell(1).getNumericCellValue()));
+                    System.out.println(fila.getCell(1).getNumericCellValue());
+                    
+                    ps.setDouble(3, fila.getCell(2).getNumericCellValue());
+                    ps.setString(4, fila.getCell(3).getStringCellValue());
+                    ps.setInt(5, (int) fila.getCell(4).getNumericCellValue());
+                    ps.setInt(6, (int) fila.getCell(5).getNumericCellValue());
+                    ps.setInt(7, (int) fila.getCell(6).getNumericCellValue());
+                    ps.setInt(8, estado);
+                    
+                    //JOptionPane.showMessageDialog(null, "Carga masiva completa");
+                }else{
+                    int numerofila = numFilas+1;
+                    JOptionPane.showMessageDialog(null, "¡El video juego en la fila: "+numerofila+" ya exete!");
+                }
             }
             cn.close();
         } catch (SQLException e) {

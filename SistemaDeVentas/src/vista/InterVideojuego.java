@@ -168,7 +168,8 @@ public class InterVideojuego extends javax.swing.JInternalFrame {
             txt_precio.setBackground(Color.red);
         }else{
             //consulta para verificar redundancia de informacion
-            if(!controlVideojuego.verificacionExiste(txt_nombre.getText().trim(), txt_descripcion.getText().trim())){
+            this.IdPlataforma();
+            if(!controlVideojuego.verificacionExiste(txt_nombre.getText().trim(), txt_descripcion.getText().trim(), obtenerIdPlataforma)){
                 if(iva.equalsIgnoreCase("Seleccione IVA:")){
                     JOptionPane.showMessageDialog(null, "Seleccione IVA.");
                 }else if(categoria.equalsIgnoreCase("Seleccione Categoria:")){
@@ -216,7 +217,7 @@ public class InterVideojuego extends javax.swing.JInternalFrame {
                         videojuego.setIdCategoria(obtenerIdCategoria);
                         
                         //idPlataforma - metodo para obtener el id de la plataforma
-                        this.IdPlataforma();
+                        
                         videojuego.setIdPlataforma(obtenerIdPlataforma);
                         
                         videojuego.setEstado(1);
