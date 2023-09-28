@@ -53,23 +53,24 @@ public class Ctrl_Videojuego {
     }
 
     public boolean verificacionExiste(String videojuego, String descripcion, int idPlataforma) {
-        boolean respuesta = false;
-        String sql = "select nombre, descripcion from " + TABLA + " where nombre = '" + videojuego + "' and descripcion = '" + descripcion + "'"
-                + "and idPlataforma= '"+idPlataforma+"';";
-        Statement st;
+    boolean respuesta = false;
+    String sql = "SELECT nombre, descripcion FROM " + TABLA + " WHERE nombre = ? AND descripcion = ? AND idPlataforma = ?";
+    try (Connection cn = (Connection) Conexion.conectar();
+            
+         PreparedStatement ps = (PreparedStatement) cn.prepareStatement(sql)) {
 
-        try {
-            Connection cn = (Connection) Conexion.conectar();
-            st = (Statement) cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-                respuesta = true;
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al consultar el Videojuego: " + e);
+        ps.setString(1, videojuego);
+        ps.setString(2, descripcion);
+        ps.setInt(3, idPlataforma);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            respuesta = rs.next();
         }
-        return respuesta;
+    } catch (SQLException e) {
+        System.out.println("Error al consultar el Videojuego: " + e);
     }
+    return respuesta;
+}
 
     public boolean Actualizar(Videojuego objeto, int idVideojuego) {
         boolean respuesta = false;
@@ -126,7 +127,7 @@ public class Ctrl_Videojuego {
         PreparedStatement ps;
         try {
             Connection cn = (Connection) Conexion.conectar();
-            FileInputStream file = new FileInputStream(new File(archivo));
+            FileInputStream file = new FileInputStream(archivo);
 
             XSSFWorkbook wb = new XSSFWorkbook(file);
             XSSFSheet sheet = wb.getSheetAt(0);
@@ -135,9 +136,9 @@ public class Ctrl_Videojuego {
 
             for (int i = 1; i <= numFilas; i++) {
                 Row fila = sheet.getRow(i);
+               
 
-                ps = (PreparedStatement) cn.prepareStatement("insert into " + TABLA + " (nombre, cantidad, precio, descripcion, porcentajeIva, idCategoria, idPlataforma, estado) "
-                        + "values (?,?,?,?,?,?,?,?);");
+                ps = (PreparedStatement) cn.prepareStatement("insert into " + TABLA + " (nombre, cantidad, precio, descripcion, porcentajeIva, idCategoria, idPlataforma, estado) values (?,?,?,?,?,?,?,?);");
                 if (!verificacionExiste(fila.getCell(0).getStringCellValue(), fila.getCell(3).getStringCellValue(), 
                        (int) fila.getCell(6).getNumericCellValue() )) {
                     
@@ -153,7 +154,7 @@ public class Ctrl_Videojuego {
                     ps.setInt(6, (int) fila.getCell(5).getNumericCellValue());
                     ps.setInt(7, (int) fila.getCell(6).getNumericCellValue());
                     ps.setInt(8, estado);
-                    
+                    ps.executeUpdate();
                     //JOptionPane.showMessageDialog(null, "Carga masiva completa");
                 }else{
                     int numerofila = numFilas+1;

@@ -175,7 +175,13 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel4.add(txt_filtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 510, -1));
+
+        txt_filtro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_filtroKeyPressed(evt);
+            }
+        });
+        jPanel4.add(txt_filtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 570, -1));
 
         jButton_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar (1).png"))); // NOI18N
         jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -183,9 +189,9 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
                 jButton_buscarActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, -1, -1));
+        jPanel4.add(jButton_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, -1, -1));
 
-        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 590, 50));
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 670, 50));
 
         jLabel1_walpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo3.jpg"))); // NOI18N
         getContentPane().add(jLabel1_walpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 390));
@@ -258,6 +264,13 @@ public class InterGestionarCategorias extends javax.swing.JInternalFrame {
         this.CargarTablaCategoria();
         txt_filtro.setText("");
     }//GEN-LAST:event_jButton_refrescarActionPerformed
+
+    private void txt_filtroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtroKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == evt.VK_ENTER){
+            this.CargarTablaCategoria(txt_filtro.getText().trim());
+        }
+    }//GEN-LAST:event_txt_filtroKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

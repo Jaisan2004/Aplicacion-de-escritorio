@@ -299,7 +299,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="30" y="50" width="590" height="50"/>
+          <AbsoluteConstraints x="30" y="50" width="670" height="50"/>
         </Constraint>
       </Constraints>
 
@@ -308,9 +308,12 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="txt_filtro">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_filtroKeyPressed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="10" width="510" height="-1"/>
+              <AbsoluteConstraints x="10" y="10" width="570" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -325,7 +328,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="530" y="10" width="-1" height="-1"/>
+              <AbsoluteConstraints x="600" y="10" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

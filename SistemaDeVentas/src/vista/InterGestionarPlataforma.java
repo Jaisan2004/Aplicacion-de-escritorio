@@ -30,7 +30,7 @@ public class InterGestionarPlataforma extends javax.swing.JInternalFrame {
     
     public InterGestionarPlataforma() {
         initComponents();
-        this.setSize(new Dimension(700, 425));
+        this.setSize(new Dimension(750, 425));
         this.setTitle("Gestionar Plataformas");
         
         this.CargarTablaPlataformas();
@@ -49,6 +49,7 @@ public class InterGestionarPlataforma extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_plataformas = new javax.swing.JTable();
+        jButton_refrescar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton_actualizar = new javax.swing.JButton();
         jButton_eliminar = new javax.swing.JButton();
@@ -91,7 +92,15 @@ public class InterGestionarPlataforma extends javax.swing.JInternalFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 8, 444, 242));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 460, 250));
+        jButton_refrescar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/actualizar Tabla.png"))); // NOI18N
+        jButton_refrescar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_refrescarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton_refrescar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 510, 250));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -119,7 +128,7 @@ public class InterGestionarPlataforma extends javax.swing.JInternalFrame {
         });
         jPanel2.add(jButton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 40, 100, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, 130, 80));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 120, 130, 80));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -151,12 +160,23 @@ public class InterGestionarPlataforma extends javax.swing.JInternalFrame {
         txt_estado.setForeground(new java.awt.Color(0, 0, 0));
         jPanel3.add(txt_estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 170, -1));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, 190, 150));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 220, 190, 150));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel4.add(txt_filtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 510, -1));
+
+        txt_filtro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_filtroActionPerformed(evt);
+            }
+        });
+        txt_filtro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_filtroKeyPressed(evt);
+            }
+        });
+        jPanel4.add(txt_filtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 570, -1));
 
         jButton_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar (1).png"))); // NOI18N
         jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -164,12 +184,12 @@ public class InterGestionarPlataforma extends javax.swing.JInternalFrame {
                 jButton_buscarActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, -1, -1));
+        jPanel4.add(jButton_buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, -1, -1));
 
-        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 590, 50));
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 670, 50));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo2.jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 390));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 390));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -227,11 +247,30 @@ public class InterGestionarPlataforma extends javax.swing.JInternalFrame {
         this.CargarTablaPlataformas(txt_filtro.getText().trim());
     }//GEN-LAST:event_jButton_buscarActionPerformed
 
+    private void jButton_refrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_refrescarActionPerformed
+        // TODO add your handling code here:
+        this.CargarTablaPlataformas();
+        txt_filtro.setText("");
+    }//GEN-LAST:event_jButton_refrescarActionPerformed
+
+    private void txt_filtroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_filtroActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txt_filtroActionPerformed
+
+    private void txt_filtroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtroKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == evt.VK_ENTER){
+            this.CargarTablaPlataformas(txt_filtro.getText().trim());
+        }
+    }//GEN-LAST:event_txt_filtroKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_actualizar;
     private javax.swing.JButton jButton_buscar;
     private javax.swing.JButton jButton_eliminar;
+    private javax.swing.JButton jButton_refrescar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

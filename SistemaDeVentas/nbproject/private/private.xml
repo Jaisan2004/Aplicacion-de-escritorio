@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/USER/Documents/GitHub/Aplicacion-de-escritorio/SistemaDeVentas/src/vista/InterGestionarPlataforma.java</file>
             <file>file:/C:/Users/USER/Documents/GitHub/Aplicacion-de-escritorio/SistemaDeVentas/src/vista/InterGestionarVideojuego.java</file>
-            <file>file:/C:/Users/USER/Documents/GitHub/Aplicacion-de-escritorio/SistemaDeVentas/src/vista/InterCategoria.java</file>
             <file>file:/C:/Users/USER/Documents/GitHub/Aplicacion-de-escritorio/SistemaDeVentas/src/vista/FrmLogin.java</file>
-            <file>file:/C:/Users/USER/Documents/GitHub/Aplicacion-de-escritorio/SistemaDeVentas/src/controlador/Ctrl_Videojuego.java</file>
-            <file>file:/C:/Users/USER/Documents/GitHub/Aplicacion-de-escritorio/SistemaDeVentas/src/vista/InterVideojuego.java</file>
+            <file>file:/C:/Users/USER/Documents/GitHub/Aplicacion-de-escritorio/SistemaDeVentas/src/vista/InterGestionarCategorias.java</file>
             <file>file:/C:/Users/USER/Documents/GitHub/Aplicacion-de-escritorio/SistemaDeVentas/src/vista/FrmMenu.java</file>
-            <file>file:/C:/Users/USER/Documents/GitHub/Aplicacion-de-escritorio/SistemaDeVentas/src/conexion/Conexion.java</file>
         </group>
     </open-files>
 </project-private>
