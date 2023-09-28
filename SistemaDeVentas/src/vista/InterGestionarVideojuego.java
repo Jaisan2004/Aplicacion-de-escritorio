@@ -86,10 +86,10 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
         jComboBox_iva = new javax.swing.JComboBox<>();
         jComboBox_plataforma = new javax.swing.JComboBox<>();
         txt_nombre = new javax.swing.JTextField();
-        txt_cantidad = new javax.swing.JTextField();
         txt_precio = new javax.swing.JTextField();
         txt_descripcion = new javax.swing.JTextField();
         txt_estado = new javax.swing.JTextField();
+        txt_cantidad = new javax.swing.JTextField();
         jLabel1_walpaper = new javax.swing.JLabel();
 
         setClosable(true);
@@ -280,10 +280,6 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
         txt_nombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel3.add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 170, -1));
 
-        txt_cantidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txt_cantidad.setEnabled(false);
-        jPanel3.add(txt_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 170, -1));
-
         txt_precio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel3.add(txt_precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 170, -1));
 
@@ -292,6 +288,9 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
 
         txt_estado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPanel3.add(txt_estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 40, 180, -1));
+
+        txt_cantidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel3.add(txt_cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 170, -1));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 1270, 100));
 
@@ -562,7 +561,7 @@ public class InterGestionarVideojuego extends javax.swing.JInternalFrame {
         DefaultTableModel model = new DefaultTableModel();
 
         String sql = "select v.idVideojuego, v.nombre, v.cantidad, v.precio, v.descripcion, v.porcentajeIva, c.descripcion, p.descripcion, v.estado "
-                + "from " + TABLA + " as v," + TABLACATE + " as c," + TABLAPLAT + " as p "
+                + "from " + TABLA + " as v INNER JOIN " + TABLACATE + " as c ON v.idCategoria =  c.idCategoria INNER JOIN " + TABLAPLAT + " as p ON v.idPlataforma =  p.idPlataforma "
                 + "where v.idCategoria = c.idCategoria and v.idPlataforma = p.idPlataforma order by idVideojuego ASC;";
         Statement st;
 
